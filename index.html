@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifrado César Vigenere</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.4/chai.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/9.0.0/mocha.min.js"></script>
+    <script>
+        mocha.setup('bdd'); // Configura Mocha para usar BDD
+    </script>
+    <script src="../Cifrado Vigenere/test/test.js"></script>
+    <script src="/js/validar.mjs"></script>
+</head>
+<body>
+    <div class="elpepe">
+        <div class="Wrapper__form">
+            <form action="" name="formulario" class="formulario" id="formulario">
+                <h1 class="form__title">Cifrado César Vigenere</h1>
+                <h2 class="form__title">Magaña Vázquez Luis</h2>
+                <div class="form__text">Cifra tu textito pa pq crees que se llama cifrado ?.</div>
+                <div class="form__content">
+                    <label for="textarea"> Mensaje: </label>
+                    <textarea name="content" id="textarea" required></textarea>
+
+                    <label class="form__input__text" for="clave"> Clave: </label>
+                    <input type="text" name="Clave" id="clave" required>
+                    
+                    <label> Cifrar:
+                        <input type="radio" id="opcion1" name="Opciones" value="1" required>
+                    </label>
+                    <label> Descifrar:
+                        <input type="radio" id="opcion2" name="Opciones" value="2" required>
+                    </label>
+                </div>
+                <div class="form__resultado" id="resultado">¡Aquí se verá tu resultado!</div>
+                <input type="submit" value="ENVIAR" class="button">
+            </form>
+        </div>
+    </div>
+    <div class="wrapper__table">
+        <table id="tabla">
+
+        </table>
+    </div>
+</body>
+</html>
