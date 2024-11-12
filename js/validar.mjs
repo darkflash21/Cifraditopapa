@@ -1,6 +1,6 @@
-const alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+const abc = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-let textareaElemento, inputClave, formulario, resultadoElemento, tablaElemento;
+let textarea, inpText, form, resultado, table;
 
 function validarInput(input) {
     input.value = input.value.replace(/[^A-Za-zÑñáéíóúÁÉÍÓÚ\s]/g, '');
@@ -8,27 +8,28 @@ function validarInput(input) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    textareaElemento = document.getElementById('textarea');
-    inputClave = document.getElementById('clave');
-    formulario = document.getElementById('formulario');
-    resultadoElemento = document.getElementById("resultado");
-    tablaElemento = document.getElementById("tabla");
+    textarea = document.getElementById('textarea');
+    inpText = document.getElementById('clave');
+    form = document.getElementById('formulario');
+    resultado = document.getElementById("resultado");
+    table = document.getElementById("tabla");
 
     // Validar inputs 
-    textareaElemento.addEventListener('blur', function() {
+
+    textarea.addEventListener('blur', function() {
         validarInput(this);
     });
 
-    inputClave.addEventListener('blur', function() {
+    inpText.addEventListener('blur', function() {
         validarInput(this);
     });
 
-    formulario.addEventListener('submit', function(evento) {
-        evento.preventDefault();
-        resultadoElemento.textContent = '';
+    form.addEventListener('submit', function(validar) {
+        validar.preventDefault();
+        resultado.textContent = '';
 
-        let mensaje = textareaElemento.value.toUpperCase();
-        let clave = inputClave.value.toUpperCase();
+        let mensaje = textarea.value.toUpperCase();
+        let clave = inpText.value.toUpperCase();
         const opciones = document.getElementsByName('Opciones');
 
         let opcionSeleccionada;
@@ -39,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Validación en js 
+    // Validación en js 
+
         if (!clave || !mensaje) {
             alert("El mensaje y la clave no pueden estar vacíos.");
             return;
@@ -50,70 +52,71 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let nuevaClave = [];
-        let indiceClave = 0;
+        let NewClave = [];
+        let claveIndex = 0;
 
         for (let i = 0; i < mensaje.length; i++) {
             if (mensaje[i] === ' ') {
-                nuevaClave.push(' ');
+                NewClave.push(' ');
             } else {
-                nuevaClave.push(clave[indiceClave]);
-                indiceClave = (indiceClave + 1) % clave.length; 
+                NewClave.push(clave[claveIndex]);
+                claveIndex = (claveIndex + 1) % clave.length; 
             }
         }
 
         if (opcionSeleccionada == "1") {
-            let mensajeCifrado = cifrar(mensaje, nuevaClave);
-            resultadoElemento.textContent = 'Mensaje cifrado: ' + mensajeCifrado;
-            crearMatrizVigenere(mensaje, nuevaClave);
+            let mensajeCifrado = cifrar(mensaje, NewClave);
+            resultado.textContent = 'Mensaje cifrado: ' + mensajeCifrado;
+            crearMatrizVigenere(mensaje, NewClave);
         } else if (opcionSeleccionada == "2") {
-            let mensajeDescifrado = descifrar(mensaje, nuevaClave);
-            resultadoElemento.textContent = 'Mensaje descifrado: ' + mensajeDescifrado;
-            crearMatrizVigenereDescifrar(mensaje, nuevaClave);
+            let mensajeDescifrado = descifrar(mensaje, NewClave);
+            resultado.textContent = 'Mensaje descifrado: ' + mensajeDescifrado;
+            crearMatrizVigenereDescifrar(mensaje, NewClave);
         }
     });
 });
 
-function cifrar(mensaje, nuevaClave) {
-    let cifrado = [];
+function cifrar(mensaje, NewClave) {
+    let Cifrado = [];
     for (let i = 0; i < mensaje.length; i++) {
-        let posicionMensaje = alfabeto.indexOf(mensaje[i]);
-        let posicionClave = alfabeto.indexOf(nuevaClave[i]);
+        let posicionM = abc.indexOf(mensaje[i]);
+        let posicionC = abc.indexOf(NewClave[i]);
 
         if (mensaje[i] === ' ') {
-            cifrado.push(' '); 
-        } else if (posicionMensaje === -1 || posicionClave === -1) {
-            cifrado.push(mensaje[i]); 
+            Cifrado.push(' '); 
+        } else if (posicionM === -1 || posicionC === -1) {
+            Cifrado.push(mensaje[i]); 
         } else {
-            cifrado.push(alfabeto[((posicionMensaje + posicionClave) % alfabeto.length)]);
+            Cifrado.push(abc[((posicionM + posicionC) % abc.length)]);
         }
     }
     
-    return cifrado.join('');  
+    return Cifrado.join('');  
 }
 
-function descifrar(mensaje, nuevaClave) {
-    let descifrado = [];
+function descifrar(mensaje, NewClave) {
+    let DeCifrado = [];
     for (let i = 0; i < mensaje.length; i++) {
-        let posicionMensaje = alfabeto.indexOf(mensaje[i]);
-        let posicionClave = alfabeto.indexOf(nuevaClave[i]);
+        let posicionM = abc.indexOf(mensaje[i]);
+        let posicionC = abc.indexOf(NewClave[i]);
 
         if (mensaje[i] === ' ') {
-            descifrado.push(' '); 
-        } else if (posicionMensaje === -1 || posicionClave === -1) {
-            descifrado.push(mensaje[i]); 
+            DeCifrado.push(' '); 
+        } else if (posicionM === -1 || posicionC === -1) {
+            DeCifrado.push(mensaje[i]); 
         } else {
-            descifrado.push(alfabeto[((((posicionMensaje - posicionClave) % alfabeto.length) + alfabeto.length) % alfabeto.length)]);
+            DeCifrado.push(abc[((((posicionM - posicionC) % abc.length) + abc.length) % abc.length)]);
         }
     }
-    return descifrado.join('');  
+    return DeCifrado.join('');  
 }
+
 
 function crearMatrizVigenere(mensaje, clave) {
     const tabla = document.getElementById("tabla");
     tabla.innerHTML = ""; 
 
-    const alfabeto = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+    const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const tr = document.createElement("tr");
     const vacio = document.createElement("th");
     tr.appendChild(vacio);
@@ -134,11 +137,11 @@ function crearMatrizVigenere(mensaje, clave) {
         for (let j = 0; j < mensaje.length; j++) {
             const td = document.createElement("td");
             if (mensaje[j] !== ' ') {
-                const indiceMensaje = alfabeto.indexOf(mensaje[j].toUpperCase());
-                const indiceClave = alfabeto.indexOf(clave[i].toUpperCase());
+                const mensajeIndex = alfabeto.indexOf(mensaje[j].toUpperCase());
+                const claveIndex = alfabeto.indexOf(clave[i].toUpperCase());
 
-                if (indiceMensaje !== -1 && indiceClave !== -1) {
-                    const letraCifradaIndex = (indiceMensaje + indiceClave) % alfabeto.length;
+                if (mensajeIndex !== -1 && claveIndex !== -1) {
+                    const letraCifradaIndex = (mensajeIndex + claveIndex) % alfabeto.length;
                     td.textContent = alfabeto[letraCifradaIndex];
                 } else {
                     td.textContent = mensaje[j];
@@ -178,11 +181,11 @@ function crearMatrizVigenereDescifrar(mensaje, clave) {
         for (let j = 0; j < mensaje.length; j++) {
             const td = document.createElement("td");
             if (mensaje[j] !== ' ') {
-                const indiceMensaje = alfabeto.indexOf(mensaje[j].toUpperCase());
-                const indiceClave = alfabeto.indexOf(clave[i].toUpperCase());
+                const mensajeIndex = alfabeto.indexOf(mensaje[j].toUpperCase());
+                const claveIndex = alfabeto.indexOf(clave[i].toUpperCase());
 
-                if (indiceMensaje !== -1 && indiceClave !== -1) {
-                    const letraDescifradaIndex = (indiceMensaje - indiceClave + alfabeto.length) % alfabeto.length;
+                if (mensajeIndex !== -1 && claveIndex !== -1) {
+                    const letraDescifradaIndex = (mensajeIndex - claveIndex + alfabeto.length) % alfabeto.length;
                     td.textContent = alfabeto[letraDescifradaIndex];
                 } else {
                     td.textContent = mensaje[j];
