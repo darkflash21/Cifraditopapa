@@ -1,0 +1,17 @@
+{
+  "name": "cifrado-vigenere",
+  "version": "1.0.0",
+  "description": "Test de funcionalidades para el cifrado",
+  "main": "CopiaCifrarMensaje.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^5.1.1",
+    "cifrado-vigenere": "file:",
+    "mocha": "^10.7.3"
+  }
+}
